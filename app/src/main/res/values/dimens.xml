@@ -1,4 +1,7 @@
 <resources>
+    <dimen name="layout_margin">16dp</dimen>
+    <dimen name="result_movie_text">20sp</dimen>
+
     <!--Cards-->
     <dimen name="card_element_padding">16dp</dimen>
     <dimen name="card_elevation">5dp</dimen>

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TasteDiveTester</string>
     <string name="action_settings">Settings</string>
+    <string name="results_for_text">Showing results for %s</string>
 </resources>

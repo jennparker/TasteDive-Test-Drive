@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.Response.Listener
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var moviesResponse: ResponseData
     private var movieList: ArrayList<Movie> = ArrayList()
+    private lateinit var resultItemText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate called")
@@ -63,7 +65,6 @@ class MainActivity : AppCompatActivity() {
         val requestQueue = Volley.newRequestQueue(this)
         val url =
             Constants.TASTE_DIVE_BASE_URL + Constants.SAMPLE_MOVIE + Constants.INFO_LEVEL + Constants.TASTE_DIVE_API_KEY
-        //"https://tastedive.com/api/similar?q=tombstone&k=322552-MovieGro-VR4OHB0J&info=1"
 
         val request = StringRequest(
             Request.Method.GET
@@ -95,11 +96,14 @@ class MainActivity : AppCompatActivity() {
                         println("Adding new Movie to movieList: $item")
                     }
 
-                    updateMovieList()
+                    val searchMovieString:String = String.format(resources.getString(R.string.results_for_text)
+                        , moviesResponse.similar.info.get(0).name)
+
+                    resultItemText = findViewById(R.id.searchItemText)
+                    resultItemText.text = searchMovieString
 
                     Log.d(TAG, "Response: ${moviesResponse}")
 
-                    Log.d(TAG, "Response size is ${moviesResponse.similar.results.size}")
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -110,12 +114,6 @@ class MainActivity : AppCompatActivity() {
         )
         Log.d(TAG, "Request is: $request")
         requestQueue.add(request)
-    }
-
-    fun updateMovieList() {
-        Log.d(TAG, "updateMovieList called")
-
-        viewAdapter.notifyDataSetChanged()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

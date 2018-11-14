@@ -9,10 +9,24 @@
         tools:showIn="@layout/activity_main"
         tools:context=".MainActivity">
 
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:scrollbars="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+    <TextView
+            android:id="@+id/searchItemText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/result_movie_text"
+            app:layout_constraintStart_toStartOf="parent"
+            android:paddingBottom="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="@dimen/layout_margin"
+            android:layout_marginEnd="@dimen/layout_margin"
+            app:layout_constraintBottom_toTopOf="@id/recyclerView"
+            android:text="@string/results_for_text"/>
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:scrollbars="vertical"
+            android:layout_marginTop="46dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 </android.support.constraint.ConstraintLayout>
