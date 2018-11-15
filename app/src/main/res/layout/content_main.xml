@@ -3,30 +3,60 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/activity_main"
-        tools:context=".MainActivity">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <TextView
-            android:id="@+id/searchItemText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/result_movie_text"
-            app:layout_constraintStart_toStartOf="parent"
-            android:paddingBottom="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/searchDescription"
+            android:text="@string/search_description"
+            android:textSize="@dimen/description_text"
+            android:textAlignment="center"
+            android:paddingTop="@dimen/description_top_padding"
             android:layout_marginStart="@dimen/layout_margin"
             android:layout_marginEnd="@dimen/layout_margin"
-            app:layout_constraintBottom_toTopOf="@id/recyclerView"
-            android:text="@string/results_for_text"/>
-
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:scrollbars="vertical"
-            android:layout_marginTop="46dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"/>
+
+    <ImageView
+            android:id="@+id/verySatisfiedFace"
+            android:src="@drawable/ic_sentiment_very_satisfied_black"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchDescription"
+            app:layout_constraintBottom_toTopOf="@id/searchTermField"/>
+
+    <EditText
+            android:id="@+id/searchTermField"
+            android:layout_width="@dimen/search_field_width"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/searchDescription"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:hint="@string/search_hint"/>
+
+    <Button
+            android:text="@string/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/searchTermField"
+            android:layout_margin="@dimen/comment_layout_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/searchButton"/>
+
+    <TextView
+            android:id="@+id/searchPageComment"
+            android:text="@string/search_comment"
+            android:layout_margin="@dimen/comment_layout_margin"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/searchButton"/>
 
 </android.support.constraint.ConstraintLayout>
