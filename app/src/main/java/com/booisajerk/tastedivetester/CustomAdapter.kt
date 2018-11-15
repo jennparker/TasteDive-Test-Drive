@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.booisajerk.tastedivetester.TextHelpers.capitalizeFirstLetter
+import com.booisajerk.tastedivetester.TextHelpers.trimNewLines
 
 /**
  * Provide views to RecyclerView with data from movies.
@@ -39,22 +41,14 @@ class CustomAdapter(private val movies: ArrayList<Movie>) :
 
         // Get element from dataset at this position and replace the contents of the view with that element
         viewHolder.title.text = movies.get(position).name
-        viewHolder.type.text = capitalizeFirstLetter(movies.get(position).type)
-        viewHolder.description.text = trimNewLines(movies.get(position).wTeaser)
+        viewHolder.type.text = capitalizeFirstLetter(movies[position].type)
+        viewHolder.description.text = trimNewLines(movies[position].wTeaser)
     }
 
     // Return the size of your dataset (invoked by layout manager)
     override fun getItemCount() = movies.size
 
-    private fun capitalizeFirstLetter(line: String): String {
-        return Character.toUpperCase(line[0]) + line.substring(1)
-    }
 
-    // Trim leading and trailing new lines '\n'
-    // Note: New lines within the text (e.g. paragraphs) are retained
-    private fun trimNewLines(text: String): String {
-        return text.trim('\n')
-    }
 
     companion object {
         private val TAG = "CustomAdapter"

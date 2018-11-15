@@ -12,6 +12,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.booisajerk.tastedivetester.TextHelpers.capitalizeFirstLetter
 import com.booisajerk.tastedivetester.models.ResponseData
 import com.squareup.moshi.JsonAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -100,6 +101,7 @@ class SearchResultActivity : AppCompatActivity() {
                     val searchMovieString: String = String.format(
                         resources.getString(R.string.results_for_text)
                         , moviesResponse.similar.info[0].name
+                        , capitalizeFirstLetter(moviesResponse.similar.info[0].type)
                     )
 
                     resultItemText = findViewById(R.id.searchItemText)
