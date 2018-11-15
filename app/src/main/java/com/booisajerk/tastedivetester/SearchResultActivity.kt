@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.View.VISIBLE
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.Response
@@ -15,7 +17,7 @@ import com.squareup.moshi.JsonAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 
-class SearchResultActivity: AppCompatActivity() {
+class SearchResultActivity : AppCompatActivity() {
     private lateinit var adapter: JsonAdapter<ResponseData>
     private lateinit var moviesResponse: ResponseData
     private lateinit var resultItemText: TextView
@@ -24,6 +26,7 @@ class SearchResultActivity: AppCompatActivity() {
     private lateinit var viewManager: RecyclerView.LayoutManager
     private var movieList: ArrayList<Movie> = ArrayList()
     private lateinit var searchString: String
+    private lateinit var progress: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate called")
@@ -32,8 +35,13 @@ class SearchResultActivity: AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // Retrieve the search string from the MainActivity
         searchString = intent.getStringExtra(Constants.INTENT_KEY)
 
+        // Show progress bar while results load
+        progress = findViewById(R.id.progressBar)
+        progress.isIndeterminate = true
+        progress.visibility = ProgressBar.VISIBLE
 
         viewManager = LinearLayoutManager(this)
 
@@ -54,7 +62,7 @@ class SearchResultActivity: AppCompatActivity() {
         }
     }
 
-    fun requestMovies(enteredMovie:String) {
+    fun requestMovies(enteredMovie: String) {
         Log.d(TAG, "requestMovie() called")
         val requestQueue = Volley.newRequestQueue(this)
         val url =
@@ -91,11 +99,15 @@ class SearchResultActivity: AppCompatActivity() {
 
                     val searchMovieString: String = String.format(
                         resources.getString(R.string.results_for_text)
-                        , moviesResponse.similar.info.get(0).name
+                        , moviesResponse.similar.info[0].name
                     )
 
                     resultItemText = findViewById(R.id.searchItemText)
                     resultItemText.text = searchMovieString
+                    resultItemText.visibility = VISIBLE
+
+                    // Hide the progress bar now that data is loaded
+                    progress.visibility = ProgressBar.INVISIBLE
 
                     Log.d(TAG, "Response: ${moviesResponse}")
 
