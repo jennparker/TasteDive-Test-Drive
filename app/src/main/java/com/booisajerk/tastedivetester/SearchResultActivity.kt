@@ -28,7 +28,7 @@ class SearchResultActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate called")
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+        setContentView(R.layout.activity_search_result)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
