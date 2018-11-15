@@ -7,5 +7,6 @@
     </string>
     <string name="search">Find Awesome stuff</string>
     <string name="search_hint">What do you love?</string>
-    <string name="search_comment">Psst, feel free to enter something you hate instead. /n Suit yourself.</string>
+    <string name="search_comment">Psst, feel free to enter something you hate instead. Suit yourself.</string>
+    <string name="blank_error_message">Enter a search</string>
 </resources>

@@ -12,6 +12,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.booisajerk.tastedivetester.models.ResponseData
 import com.squareup.moshi.JsonAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 
 class SearchResultActivity: AppCompatActivity() {
@@ -28,7 +29,7 @@ class SearchResultActivity: AppCompatActivity() {
         Log.d(TAG, "onCreate called")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         searchString = intent.getStringExtra(Constants.INTENT_KEY)

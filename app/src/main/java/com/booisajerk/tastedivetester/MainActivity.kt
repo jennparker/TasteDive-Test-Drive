@@ -9,7 +9,6 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,9 +18,13 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         searchButton.setOnClickListener {
-            val intent = Intent(this@MainActivity, SearchResultActivity::class.java)
-            intent.putExtra(Constants.INTENT_KEY, searchTermField.getText().toString())
-            startActivity(intent)
+            if (searchTermField.text.length == 0) {
+                searchTermField.setError(getString(R.string.blank_error_message))
+            } else {
+                val intent = Intent(this@MainActivity, SearchResultActivity::class.java)
+                intent.putExtra(Constants.INTENT_KEY, searchTermField.getText().toString())
+                startActivity(intent)
+            }
         }
     }
 
