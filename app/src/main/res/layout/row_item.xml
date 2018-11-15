@@ -21,8 +21,18 @@
                 android:paddingStart="@dimen/card_element_padding"
                 android:paddingEnd="@dimen/card_element_padding"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+                android:id="@+id/mediaType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/card_element_padding"
+                android:paddingStart="@dimen/card_element_padding"
+                android:paddingEnd="@dimen/card_element_padding"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintBottom_toBottomOf="@id/movieTitle"/>
 
         <TextView
                 android:id="@+id/movieDescription"
