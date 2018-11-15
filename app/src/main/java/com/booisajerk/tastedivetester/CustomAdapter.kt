@@ -40,7 +40,7 @@ class CustomAdapter(private val movies: ArrayList<Movie>) :
         // Get element from dataset at this position and replace the contents of the view with that element
         viewHolder.title.text = movies.get(position).name
         viewHolder.type.text = capitalizeFirstLetter(movies.get(position).type)
-        viewHolder.description.text = movies.get(position).wTeaser
+        viewHolder.description.text = trimNewLines(movies.get(position).wTeaser)
     }
 
     // Return the size of your dataset (invoked by layout manager)
@@ -48,6 +48,12 @@ class CustomAdapter(private val movies: ArrayList<Movie>) :
 
     private fun capitalizeFirstLetter(line: String): String {
         return Character.toUpperCase(line[0]) + line.substring(1)
+    }
+
+    // Trim leading and trailing new lines '\n'
+    // Note: New lines within the text (e.g. paragraphs) are retained
+    private fun trimNewLines(text: String): String {
+        return text.trim('\n')
     }
 
     companion object {
