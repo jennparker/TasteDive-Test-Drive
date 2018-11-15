@@ -29,6 +29,7 @@ class SearchResultActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         searchString = intent.getStringExtra(Constants.INTENT_KEY)
 
@@ -50,13 +51,6 @@ class SearchResultActivity: AppCompatActivity() {
 
             requestMovies(searchString)
         }
-    }
-
-        override fun onStart() {
-        Log.d(TAG, "onStart called")
-        super.onStart()
-
-
     }
 
     fun requestMovies(enteredMovie:String) {
