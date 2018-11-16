@@ -20,7 +20,7 @@ object TextHelpers {
     }
 
     /*
-    * Bold the name of the search it
+    * Bold the name of the search item
     */
     private fun boldText(fullText: String, boldText: String): SpannableStringBuilder {
         val builder = SpannableStringBuilder()
@@ -50,5 +50,13 @@ object TextHelpers {
         formattedString = boldText(searchMovieString, resultName)
 
         return formattedString
+    }
+
+    /*
+    * Replace the spaces names with multiple words with %20 so the request url will work
+    * */
+    fun replaceSpaces(searchText: String): String {
+
+        return searchText.replace(" ", "%20")
     }
 }

@@ -13,6 +13,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.booisajerk.tastedivetester.TextHelpers.formattedResultTitleText
+import com.booisajerk.tastedivetester.TextHelpers.replaceSpaces
 import com.booisajerk.tastedivetester.models.ResponseData
 import com.squareup.moshi.JsonAdapter
 import java.io.IOException
@@ -36,7 +37,7 @@ class SearchResultActivity : AppCompatActivity() {
         resultItemText = findViewById(R.id.searchItemText)
 
         // Retrieve the search string from the MainActivity
-        searchString = intent.getStringExtra(Constants.INTENT_KEY)
+        searchString = replaceSpaces(intent.getStringExtra(Constants.INTENT_KEY))
 
         // Show progress bar while results load
         progress = findViewById(R.id.progressBar)
