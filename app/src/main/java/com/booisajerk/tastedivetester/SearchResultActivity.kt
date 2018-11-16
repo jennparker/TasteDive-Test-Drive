@@ -5,14 +5,14 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.View.VISIBLE
+import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.booisajerk.tastedivetester.TextHelpers.capitalizeFirstLetter
+import com.booisajerk.tastedivetester.TextHelpers.formattedResultTitleText
 import com.booisajerk.tastedivetester.models.ResponseData
 import com.squareup.moshi.JsonAdapter
 import java.io.IOException
@@ -32,6 +32,8 @@ class SearchResultActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate called")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
+
+        resultItemText = findViewById(R.id.searchItemText)
 
         // Retrieve the search string from the MainActivity
         searchString = intent.getStringExtra(Constants.INTENT_KEY)
@@ -93,15 +95,14 @@ class SearchResultActivity : AppCompatActivity() {
                         println("Adding new Movie to movieList: $item")
                     }
 
-                    val searchMovieString: String = String.format(
-                        resources.getString(R.string.results_for_text)
-                        , moviesResponse.similar.info[0].name
-                        , capitalizeFirstLetter(moviesResponse.similar.info[0].type)
-                    )
 
-                    resultItemText = findViewById(R.id.searchItemText)
-                    resultItemText.text = searchMovieString
-                    resultItemText.visibility = VISIBLE
+                    resultItemText.text = formattedResultTitleText(
+                        moviesResponse.similar.info[0].name,
+                        moviesResponse.similar.info[0].type,
+                        this)
+
+                    // Don't show title until it is properly formatted
+                    resultItemText.visibility = View.VISIBLE
 
                     // Hide the progress bar now that data is loaded
                     progress.visibility = ProgressBar.INVISIBLE
