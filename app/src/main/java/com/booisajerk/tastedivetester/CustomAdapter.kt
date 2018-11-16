@@ -40,7 +40,7 @@ class CustomAdapter(private val movies: ArrayList<Movie>) :
         Log.d(TAG, "Element $position set.")
 
         // Get element from dataset at this position and replace the contents of the view with that element
-        viewHolder.title.text = movies.get(position).name
+        viewHolder.title.text = movies[position].name
         viewHolder.type.text = capitalizeFirstLetter(movies[position].type)
         viewHolder.description.text = trimNewLines(movies[position].wTeaser)
     }

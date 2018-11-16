@@ -15,7 +15,6 @@ import com.android.volley.toolbox.Volley
 import com.booisajerk.tastedivetester.TextHelpers.capitalizeFirstLetter
 import com.booisajerk.tastedivetester.models.ResponseData
 import com.squareup.moshi.JsonAdapter
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 
 class SearchResultActivity : AppCompatActivity() {
@@ -33,8 +32,6 @@ class SearchResultActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate called")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Retrieve the search string from the MainActivity
         searchString = intent.getStringExtra(Constants.INTENT_KEY)
@@ -63,7 +60,7 @@ class SearchResultActivity : AppCompatActivity() {
         }
     }
 
-    fun requestMovies(enteredMovie: String) {
+    private fun requestMovies(enteredMovie: String) {
         Log.d(TAG, "requestMovie() called")
         val requestQueue = Volley.newRequestQueue(this)
         val url =
@@ -81,20 +78,18 @@ class SearchResultActivity : AppCompatActivity() {
                 try {
                     moviesResponse = adapter.fromJson(response)!!
 
-                    var count = 0
-                    for (item in moviesResponse.similar.results) {
+                    for ((count, item) in moviesResponse.similar.results.withIndex()) {
                         movieList.add(
                             Movie(
-                                moviesResponse.similar.results.get(count).name,
-                                moviesResponse.similar.results.get(count).type,
-                                moviesResponse.similar.results.get(count).wTeaser,
-                                moviesResponse.similar.results.get(count).wUrl,
-                                moviesResponse.similar.results.get(count).yUrl,
-                                moviesResponse.similar.results.get(count).yID
+                                moviesResponse.similar.results[count].name,
+                                moviesResponse.similar.results[count].type,
+                                moviesResponse.similar.results[count].wTeaser,
+                                moviesResponse.similar.results[count].wUrl,
+                                moviesResponse.similar.results[count].yUrl,
+                                moviesResponse.similar.results[count].yID
                             )
                         )
 
-                        count++
                         println("Adding new Movie to movieList: $item")
                     }
 
@@ -111,7 +106,7 @@ class SearchResultActivity : AppCompatActivity() {
                     // Hide the progress bar now that data is loaded
                     progress.visibility = ProgressBar.INVISIBLE
 
-                    Log.d(TAG, "Response: ${moviesResponse}")
+                    Log.d(TAG, "Response: $moviesResponse")
 
                 } catch (e: IOException) {
                     e.printStackTrace()

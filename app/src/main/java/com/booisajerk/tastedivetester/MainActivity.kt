@@ -18,11 +18,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         searchButton.setOnClickListener {
-            if (searchTermField.text.length == 0) {
-                searchTermField.setError(getString(R.string.blank_error_message))
+            if (searchTermField.text.isEmpty()) {
+                searchTermField.error = getString(R.string.blank_error_message)
             } else {
                 val intent = Intent(this@MainActivity, SearchResultActivity::class.java)
-                intent.putExtra(Constants.INTENT_KEY, searchTermField.getText().toString())
+                intent.putExtra(Constants.INTENT_KEY, searchTermField.text.toString())
                 startActivity(intent)
             }
         }
