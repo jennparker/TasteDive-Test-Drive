@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TasteDive Test Drive</string>
     <string name="action_settings">Settings</string>
-    <string name="results_for_text">Displaying results for %s (%s)</string>
+    <string name="results_for_text">"Since you\'re into \n %s (%s), \n you might also enjoy:</string>
     <string name="search_description">Get recommendations for stuff we think you\'ll love based on stuff
         you already love. Just enter the name of a movie, show, book, author, game or music. Give it a try!
     </string>
@@ -9,4 +9,9 @@
     <string name="search_hint">What do you love?</string>
     <string name="search_comment">Psst, feel free to enter something you hate instead. Suit yourself.</string>
     <string name="blank_error_message">Type in something to search for</string>
+    <string name="about_title">About this app</string>
+    <string name="about_app_text">TODO Add About app text</string>
+    <string name="tastedive_attribution_text">TODO add TasteDive attribution text here</string>
+    <string name="attribution_title">Attribution</string>
+    <string name="tastedive_title">TasteDive</string>
 </resources>

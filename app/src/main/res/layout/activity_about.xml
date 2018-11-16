@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/layout_margin"
+        tools:context=".AboutActivity">
+
+    <TextView
+            android:id="@+id/aboutText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:paddingBottom="@dimen/element_padding"
+            android:text="@string/about_app_text"/>
+
+
+    <android.support.constraint.Guideline
+            android:id="@+id/guidelineMiddle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.4"/>
+
+    <View
+            android:id="@+id/divider"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            app:layout_constraintTop_toBottomOf="@+id/guidelineMiddle"
+            android:background="@color/colorPrimaryDark"/>
+
+    <TextView
+            android:id="@+id/attributionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/attribution_title"
+            android:paddingTop="@dimen/element_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <TextView
+            android:id="@+id/tasteDiveTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tastedive_title"
+            android:paddingTop="@dimen/element_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/attributionTitle"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+    <TextView
+            android:id="@+id/tasteDiveAttribution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/element_padding"
+            app:layout_constraintTop_toBottomOf="@id/tasteDiveTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/tastedive_attribution_text"/>
+
+</android.support.constraint.ConstraintLayout>
