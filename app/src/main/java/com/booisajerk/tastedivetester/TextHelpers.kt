@@ -42,12 +42,12 @@ object TextHelpers {
     fun formattedResultTitleText(resultName: String?, resultType: String?, context: Context): SpannableStringBuilder {
         val formattedString: SpannableStringBuilder
 
-        val searchMovieString: String = String.format(
+        val searchResultString: String = String.format(
             context.getString(R.string.results_for_text)
             , resultName
             , capitalizeFirstLetter(resultType)
         )
-        formattedString = boldText(searchMovieString, resultName)
+        formattedString = boldText(searchResultString, resultName)
 
         return formattedString
     }

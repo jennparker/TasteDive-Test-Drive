@@ -13,7 +13,7 @@
             android:layout_height="match_parent">
 
         <TextView
-                android:id="@+id/movieTitle"
+                android:id="@+id/mediaTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/element_padding"
@@ -30,17 +30,17 @@
                 android:paddingEnd="@dimen/card_element_padding"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintBottom_toBottomOf="@id/movieTitle"/>
+                card_view:layout_constraintBottom_toBottomOf="@id/mediaTitle"/>
 
         <TextView
-                android:id="@+id/movieDescription"
+                android:id="@+id/mediaDescription"
                 android:layout_width="wrap_content"
                 android:textAlignment="viewStart"
                 android:layout_height="wrap_content"
                 android:justificationMode="inter_word"
                 android:padding="@dimen/card_element_padding"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@id/movieTitle"
+                card_view:layout_constraintTop_toBottomOf="@id/mediaTitle"
                 card_view:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

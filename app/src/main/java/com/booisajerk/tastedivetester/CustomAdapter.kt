@@ -10,43 +10,43 @@ import com.booisajerk.tastedivetester.TextHelpers.capitalizeFirstLetter
 import com.booisajerk.tastedivetester.TextHelpers.trimNewLines
 
 /**
- * Provide views to RecyclerView with data from movies.
+ * Provide views to RecyclerView with data from media.
  *
  * Initialize the dataset of the Adapter.
  */
-class CustomAdapter(private val movies: ArrayList<Movie>) :
-    RecyclerView.Adapter<CustomAdapter.MovieViewHolder>() {
+class CustomAdapter(private val media: ArrayList<Media>) :
+    RecyclerView.Adapter<CustomAdapter.MediaViewHolder>() {
 
     /**
      * Provide a reference to the views
      */
-    class MovieViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val title: TextView = v.findViewById(R.id.movieTitle)
+    class MediaViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+        val title: TextView = v.findViewById(R.id.mediaTitle)
         val type: TextView = v.findViewById(R.id.mediaType)
-        val description: TextView = v.findViewById(R.id.movieDescription)
+        val description: TextView = v.findViewById(R.id.mediaDescription)
     }
 
     // Create new views (invoked by layout manager)
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MovieViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MediaViewHolder {
         // Create a new view.
         val vCardView = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.row_item, viewGroup, false)
 
-        return MovieViewHolder(vCardView)
+        return MediaViewHolder(vCardView)
     }
 
     // Replace the contents of a view (invoked by layout manager)
-    override fun onBindViewHolder(viewHolder: MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: MediaViewHolder, position: Int) {
         Log.d(TAG, "Element $position set.")
 
         // Get element from dataset at this position and replace the contents of the view with that element
-        viewHolder.title.text = movies[position].name
-        viewHolder.type.text = movies[position].type?.let { capitalizeFirstLetter(it) }
-        viewHolder.description.text = movies[position].wTeaser?.let { trimNewLines(it) }
+        viewHolder.title.text = media[position].name
+        viewHolder.type.text = media[position].type?.let { capitalizeFirstLetter(it) }
+        viewHolder.description.text = media[position].description?.let { trimNewLines(it) }
     }
 
     // Return the size of your dataset (invoked by layout manager)
-    override fun getItemCount() = movies.size
+    override fun getItemCount() = media.size
 
 
 

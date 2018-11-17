@@ -1,7 +1,7 @@
 package com.booisajerk.tastedivetester
 
-data class Movie(
+data class Media(
     val name: String? = "",
     val type: String? = "",
-    val wTeaser: String? = ""
+    val description: String? = ""
 )

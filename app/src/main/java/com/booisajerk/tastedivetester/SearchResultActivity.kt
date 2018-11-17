@@ -23,12 +23,12 @@ import java.io.IOException
 
 class SearchResultActivity : AppCompatActivity() {
     private lateinit var adapter: JsonAdapter<ResponseData>
-    private lateinit var moviesResponse: ResponseData
+    private lateinit var mediaResponse: ResponseData
     private lateinit var resultItemText: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private var movieList: ArrayList<Movie> = ArrayList()
+    private var mediaList: ArrayList<Media> = ArrayList()
     private lateinit var searchString: String
     private lateinit var progress: ProgressBar
 
@@ -49,7 +49,7 @@ class SearchResultActivity : AppCompatActivity() {
 
         viewManager = LinearLayoutManager(this)
 
-        viewAdapter = CustomAdapter(movieList)
+        viewAdapter = CustomAdapter(mediaList)
 
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
             // improves performance
@@ -62,15 +62,15 @@ class SearchResultActivity : AppCompatActivity() {
             // assign viewAdapter
             adapter = viewAdapter
 
-            requestMovies(searchString)
+            requestMedia(searchString)
         }
     }
 
-    private fun requestMovies(enteredMovie: String) {
-        Log.d(TAG, "requestMovie() called")
+    private fun requestMedia(enteredMedia: String) {
+        Log.d(TAG, "requestMedia() called")
         val requestQueue = Volley.newRequestQueue(this)
         val url =
-            Constants.TASTE_DIVE_BASE_URL + Constants.QUERY_KEY + enteredMovie + Constants.INFO_LEVEL + Constants.TASTE_DIVE_API_KEY
+            Constants.TASTE_DIVE_BASE_URL + Constants.QUERY_KEY + enteredMedia + Constants.INFO_LEVEL + Constants.TASTE_DIVE_API_KEY
 
         val request = StringRequest(
             Request.Method.GET
@@ -82,32 +82,32 @@ class SearchResultActivity : AppCompatActivity() {
                 adapter = moshi.adapter(ResponseData::class.java)
 
                 try {
-                    moviesResponse = adapter.fromJson(response)!!
+                    mediaResponse = adapter.fromJson(response)!!
 
-                    println("Response:  $moviesResponse")
+                    println("Response:  $mediaResponse")
 
                     // Either user hasn't entered a vaild key or hourly quota has been reached
-                    if (moviesResponse.similar == null) {
+                    if (mediaResponse.similar == null) {
 
                         Toast.makeText(
                             this@SearchResultActivity, getString(R.string.no_result_error), Toast.LENGTH_LONG
                         ).show()
                         progressBar.visibility = ProgressBar.INVISIBLE
                     } else {
-                        for ((count, item) in moviesResponse.similar?.results?.withIndex()!!) {
-                            movieList.add(
-                                Movie(
-                                    moviesResponse.similar?.results?.get(count)?.name,
-                                    moviesResponse.similar?.results?.get(count)?.type,
-                                    moviesResponse.similar?.results?.get(count)?.description
+                        for ((count, item) in mediaResponse.similar?.results?.withIndex()!!) {
+                            mediaList.add(
+                                Media(
+                                    mediaResponse.similar?.results?.get(count)?.name,
+                                    mediaResponse.similar?.results?.get(count)?.type,
+                                    mediaResponse.similar?.results?.get(count)?.description
                                 )
                             )
-                            println("Adding new Movie to movieList: $item")
+                            println("Adding new Media to mediaList: $item")
                         }
 
                         resultItemText.text = formattedResultTitleText(
-                            moviesResponse.similar?.info?.get(0)?.name,
-                            moviesResponse.similar?.info?.get(0)?.type,
+                            mediaResponse.similar?.info?.get(0)?.name,
+                            mediaResponse.similar?.info?.get(0)?.type,
                             this
                         )
 
@@ -117,7 +117,7 @@ class SearchResultActivity : AppCompatActivity() {
                         // Hide the progress bar now that data is loaded
                         progress.visibility = ProgressBar.INVISIBLE
 
-                        Log.d(TAG, "Response: $moviesResponse")
+                        Log.d(TAG, "Response: $mediaResponse")
                     }
                 } catch (e: IOException) {
                     e.printStackTrace()
