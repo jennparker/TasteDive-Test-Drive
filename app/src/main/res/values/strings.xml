@@ -13,4 +13,7 @@
     <string name="attribution_title">Attribution</string>
     <string name="tastedive_title">TasteDive</string>
     <string name="happy_face_content_description">Happy face image</string>
+    <string name="no_result_error">Dang, either you didn\'t add your private key to Constants.kt or you\'ve exceeded
+        your hourly TasteDive quota.
+    </string>
 </resources>

@@ -7,8 +7,8 @@ import android.text.style.StyleSpan
 
 
 object TextHelpers {
-    fun capitalizeFirstLetter(text: String): String {
-        return Character.toUpperCase(text[0]) + text.substring(1)
+    fun capitalizeFirstLetter(text: String?): String? {
+        return text?.capitalize()
     }
 
     /*
@@ -22,16 +22,16 @@ object TextHelpers {
     /*
     * Bold the name of the search item
     */
-    private fun boldText(fullText: String, boldText: String): SpannableStringBuilder {
+    private fun boldText(fullText: String?, boldText: String?): SpannableStringBuilder {
         val builder = SpannableStringBuilder()
 
-        if (boldText.trim(' ').isNotEmpty()) {
-            val startingIndex = fullText.indexOf(boldText)
-            val endingIndex = startingIndex + boldText.length
+        if (boldText?.trim(' ')?.isNotEmpty()!!) {
+            val startingIndex = boldText.let { fullText?.indexOf(it) }
+            val endingIndex = startingIndex?.plus(boldText.length)
 
             builder.append(fullText)
-            if (startingIndex >= 0 && endingIndex >= 0) {
-                builder.setSpan(StyleSpan(Typeface.BOLD), startingIndex, endingIndex, 0)
+            if (startingIndex != null && endingIndex != null) {
+                startingIndex.let { endingIndex.let { it1 -> builder.setSpan(StyleSpan(Typeface.BOLD), it, it1, 0) } }
             }
         } else {
             builder.append(fullText)
@@ -39,7 +39,7 @@ object TextHelpers {
         return builder
     }
 
-    fun formattedResultTitleText(resultName: String, resultType: String, context: Context): SpannableStringBuilder {
+    fun formattedResultTitleText(resultName: String?, resultType: String?, context: Context): SpannableStringBuilder {
         val formattedString: SpannableStringBuilder
 
         val searchMovieString: String = String.format(

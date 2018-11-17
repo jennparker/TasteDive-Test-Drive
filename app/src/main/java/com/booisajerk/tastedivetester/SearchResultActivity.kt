@@ -5,17 +5,20 @@ import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.Response.Listener
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.booisajerk.tastedivetester.TextHelpers.formattedResultTitleText
 import com.booisajerk.tastedivetester.TextHelpers.replaceSpaces
 import com.booisajerk.tastedivetester.models.ResponseData
 import com.squareup.moshi.JsonAdapter
+import kotlinx.android.synthetic.main.activity_search_result.*
 import java.io.IOException
 
 class SearchResultActivity : AppCompatActivity() {
@@ -72,7 +75,7 @@ class SearchResultActivity : AppCompatActivity() {
         val request = StringRequest(
             Request.Method.GET
             , url
-            , Response.Listener<String> { response: String ->
+            , Listener<String> { response: String ->
                 Log.d(TAG, "Response received")
 
                 val moshi = MoshiBuilder.moshiInstance
@@ -81,35 +84,41 @@ class SearchResultActivity : AppCompatActivity() {
                 try {
                     moviesResponse = adapter.fromJson(response)!!
 
-                    for ((count, item) in moviesResponse.similar.results.withIndex()) {
-                        movieList.add(
-                            Movie(
-                                moviesResponse.similar.results[count].name,
-                                moviesResponse.similar.results[count].type,
-                                moviesResponse.similar.results[count].wTeaser,
-                                moviesResponse.similar.results[count].wUrl,
-                                moviesResponse.similar.results[count].yUrl,
-                                moviesResponse.similar.results[count].yID
+                    println("Response:  $moviesResponse")
+
+                    // Either user hasn't entered a vaild key or hourly quota has been reached
+                    if (moviesResponse.similar == null) {
+
+                        Toast.makeText(
+                            this@SearchResultActivity, getString(R.string.no_result_error), Toast.LENGTH_LONG
+                        ).show()
+                        progressBar.visibility = ProgressBar.INVISIBLE
+                    } else {
+                        for ((count, item) in moviesResponse.similar?.results?.withIndex()!!) {
+                            movieList.add(
+                                Movie(
+                                    moviesResponse.similar?.results?.get(count)?.name,
+                                    moviesResponse.similar?.results?.get(count)?.type,
+                                    moviesResponse.similar?.results?.get(count)?.description
+                                )
                             )
+                            println("Adding new Movie to movieList: $item")
+                        }
+
+                        resultItemText.text = formattedResultTitleText(
+                            moviesResponse.similar?.info?.get(0)?.name,
+                            moviesResponse.similar?.info?.get(0)?.type,
+                            this
                         )
 
-                        println("Adding new Movie to movieList: $item")
+                        // Don't show title until it is properly formatted
+                        resultItemText.visibility = View.VISIBLE
+
+                        // Hide the progress bar now that data is loaded
+                        progress.visibility = ProgressBar.INVISIBLE
+
+                        Log.d(TAG, "Response: $moviesResponse")
                     }
-
-
-                    resultItemText.text = formattedResultTitleText(
-                        moviesResponse.similar.info[0].name,
-                        moviesResponse.similar.info[0].type,
-                        this)
-
-                    // Don't show title until it is properly formatted
-                    resultItemText.visibility = View.VISIBLE
-
-                    // Hide the progress bar now that data is loaded
-                    progress.visibility = ProgressBar.INVISIBLE
-
-                    Log.d(TAG, "Response: $moviesResponse")
-
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }

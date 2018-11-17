@@ -1,11 +1,11 @@
 package com.booisajerk.tastedivetester
 
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.booisajerk.tastedivetester.TextHelpers.capitalizeFirstLetter
 import com.booisajerk.tastedivetester.TextHelpers.trimNewLines
 
@@ -41,8 +41,8 @@ class CustomAdapter(private val movies: ArrayList<Movie>) :
 
         // Get element from dataset at this position and replace the contents of the view with that element
         viewHolder.title.text = movies[position].name
-        viewHolder.type.text = capitalizeFirstLetter(movies[position].type)
-        viewHolder.description.text = trimNewLines(movies[position].wTeaser)
+        viewHolder.type.text = movies[position].type?.let { capitalizeFirstLetter(it) }
+        viewHolder.description.text = movies[position].wTeaser?.let { trimNewLines(it) }
     }
 
     // Return the size of your dataset (invoked by layout manager)
