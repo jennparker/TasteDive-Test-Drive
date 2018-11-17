@@ -16,11 +16,13 @@
                 android:id="@+id/mediaTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/element_padding"
+                android:textAlignment="center"
                 android:paddingStart="@dimen/card_element_padding"
                 android:paddingEnd="@dimen/card_element_padding"
+                card_view:layout_constraintTop_toBottomOf="@id/mediaType"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                card_view:layout_constraintStart_toStartOf="parent"/>
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
                 android:id="@+id/mediaType"
@@ -28,9 +30,10 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/card_element_padding"
                 android:paddingEnd="@dimen/card_element_padding"
+                android:paddingTop="@dimen/card_element_padding"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintBottom_toBottomOf="@id/mediaTitle"/>
+                card_view:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
                 android:id="@+id/mediaDescription"

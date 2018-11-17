@@ -40,7 +40,7 @@
 
     <EditText
             android:id="@+id/searchTermField"
-            android:layout_width="@dimen/search_field_width"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/guidelineMiddle"
             android:textAlignment="center"
