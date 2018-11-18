@@ -53,10 +53,10 @@ object TextHelpers {
     }
 
     /*
-    * Replace the spaces names with multiple words with %20 so the request url will work
+    * Encode spaces and commas
     * */
-    fun replaceSpaces(searchText: String): String {
+    fun encodeQueryString(searchText: String): String {
 
-        return searchText.replace(" ", "%20")
+        return searchText.replace(" ", "%20").replace(",", "%2C")
     }
 }
