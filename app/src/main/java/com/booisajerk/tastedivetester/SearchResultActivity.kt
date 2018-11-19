@@ -22,7 +22,7 @@ import com.booisajerk.tastedivetester.models.ResponseData
 import com.squareup.moshi.JsonAdapter
 import java.io.IOException
 
-class SearchResultActivity : AppCompatActivity() {
+class SearchResultActivity : BaseActivity() {
     private lateinit var adapter: JsonAdapter<ResponseData>
     private lateinit var mediaResponse: ResponseData
     private lateinit var resultItemText: TextView

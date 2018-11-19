@@ -7,7 +7,7 @@
     </string>
 
     <!--Search Results Page-->
-    <string name="results_for_text">"Since you\'re into \n %ss, \n you might also enjoy:</string>
+    <string name="results_for_text">"Since you\'re into \n %s, \n you might also enjoy:</string>
 
     <string name="search">Find Awesome stuff</string>
     <string name="search_hint">What do you love?</string>
