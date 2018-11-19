@@ -17,7 +17,10 @@
 
     <!--About Page-->
     <string name="about_title">About this app</string>
-    <string name="about_app_text">TODO Add About app text</string>
+    <string name="about_app_text">This app uses the TasteDive API to retrieve results from the TasteDive
+        recommendation engine. TasteDive uses crowd sourced reviews to suggest \"liked\" media from users with similar
+        tastes. The more reviews the engine has, the better the recommendations are, so feel free to go to their website
+        and rate some media.</string>
     <string name="attribution_title">Attribution</string>
     <string name="tastedive_title">TasteDive</string>
     <string name="tastedive_attribution_text">TasteDive is a recommendation engine that helps you explore your taste!</string>
@@ -34,5 +37,6 @@
 
     <string name="no_such_item">Hmm, it doesn\'t look like TasteDive has %s in its database. Yay! Here is your chance
         to go to TasteDive and add it. Just click the button below!</string>
+    <string name="tastedive_url">www.tastedive.com</string>
 
 </resources>

@@ -22,7 +22,7 @@
     <TextView
             android:id="@+id/searchDescription"
             android:text="@string/search_description"
-            android:textSize="@dimen/description_text"
+            android:textSize="@dimen/large_text"
             android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@id/verySatisfiedFace"
             app:layout_constraintBottom_toTopOf="@id/guidelineMiddle"

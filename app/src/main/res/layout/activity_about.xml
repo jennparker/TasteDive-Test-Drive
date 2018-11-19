@@ -9,54 +9,26 @@
         tools:context=".AboutActivity">
 
     <TextView
+            android:id="@+id/aboutAppText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/medium_text"
             app:layout_constraintStart_toStartOf="parent"
-            android:paddingBottom="@dimen/element_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:justificationMode="inter_word"
+            android:layout_margin="@dimen/element_padding"
             android:text="@string/about_app_text"/>
 
-
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineMiddle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.4"/>
-
-    <View
-            android:id="@+id/divider"
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            app:layout_constraintTop_toBottomOf="@+id/guidelineMiddle"
-            android:background="@color/colorPrimaryDark"/>
-
     <TextView
-            android:id="@+id/attributionTitle"
+            android:id="@+id/tastediveUrl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/attribution_title"
-            android:paddingTop="@dimen/element_padding"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
-    <TextView
-            android:id="@+id/tasteDiveTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tastedive_title"
-            android:paddingTop="@dimen/element_padding"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/attributionTitle"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/element_padding"
-            app:layout_constraintTop_toBottomOf="@id/tasteDiveTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/tastedive_attribution_text"/>
+            android:layout_marginTop="@dimen/element_padding"
+            android:text="@string/tastedive_url"
+            android:autoLink="web"
+            android:textSize="@dimen/medium_text"
+            app:layout_constraintTop_toBottomOf="@id/aboutAppText"
+            app:layout_constraintStart_toStartOf="@id/aboutAppText"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
