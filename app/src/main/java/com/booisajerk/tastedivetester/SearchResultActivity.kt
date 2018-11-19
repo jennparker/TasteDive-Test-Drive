@@ -1,11 +1,13 @@
 package com.booisajerk.tastedivetester
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +16,10 @@ import com.android.volley.Response
 import com.android.volley.Response.Listener
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.booisajerk.tastedivetester.TextHelpers.formattedResultTitleText
 import com.booisajerk.tastedivetester.TextHelpers.encodeQueryString
+import com.booisajerk.tastedivetester.TextHelpers.formattedResultTitleText
 import com.booisajerk.tastedivetester.models.ResponseData
 import com.squareup.moshi.JsonAdapter
-import kotlinx.android.synthetic.main.activity_search_result.*
 import java.io.IOException
 
 class SearchResultActivity : AppCompatActivity() {
@@ -37,7 +38,7 @@ class SearchResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
 
-        resultItemText = findViewById(R.id.searchItemText)
+        resultItemText = findViewById(R.id.searchResultText)
 
         // Retrieve the search string from the MainActivity
         searchString = encodeQueryString(intent.getStringExtra(Constants.INTENT_KEY))
@@ -70,7 +71,7 @@ class SearchResultActivity : AppCompatActivity() {
         Log.d(TAG, "requestMedia() called")
         val requestQueue = Volley.newRequestQueue(this)
         val url =
-            Constants.TASTE_DIVE_BASE_URL + Constants.QUERY_KEY + enteredMedia + Constants.INFO_LEVEL + Constants.TASTE_DIVE_API_KEY
+            Constants.BASE_URL + Constants.API + Constants.QUERY_KEY + enteredMedia + Constants.INFO_LEVEL + Constants.TASTE_DIVE_API_KEY
 
         val request = StringRequest(
             Request.Method.GET
@@ -86,39 +87,58 @@ class SearchResultActivity : AppCompatActivity() {
 
                     println("Response:  $mediaResponse")
 
+                    // Error response received
                     // Either user hasn't entered a vaild key or hourly quota has been reached
                     if (mediaResponse.similar == null) {
 
-                        Toast.makeText(
-                            this@SearchResultActivity, getString(R.string.no_result_error), Toast.LENGTH_LONG
-                        ).show()
-                        progressBar.visibility = ProgressBar.INVISIBLE
-                    } else {
-                        for ((count, item) in mediaResponse.similar?.results?.withIndex()!!) {
-                            mediaList.add(
-                                Media(
-                                    mediaResponse.similar?.results?.get(count)?.name,
-                                    mediaResponse.similar?.results?.get(count)?.type,
-                                    mediaResponse.similar?.results?.get(count)?.description
-                                )
-                            )
-                            println("Adding new Media to mediaList: $item")
-                        }
-
-                        resultItemText.text = formattedResultTitleText(
-                            mediaResponse.similar?.info?.get(0)?.name,
-                            mediaResponse.similar?.info?.get(0)?.type,
-                            this
-                        )
-
-                        // Don't show title until it is properly formatted
-                        resultItemText.visibility = View.VISIBLE
-
-                        // Hide the progress bar now that data is loaded
-                        progress.visibility = ProgressBar.INVISIBLE
-
-                        Log.d(TAG, "Response: $mediaResponse")
+                        showNoResponseMessage()
                     }
+
+                    // A valid response is received
+                    else {
+
+                        // If results are empty
+                        if (mediaResponse.similar!!.results?.isNullOrEmpty()!!) {
+                            Log.d(TAG, "results are empty")
+
+                            // If result type is not unknown (TasteDive has a record of this media, but doesn't have
+                            // enough votes to make recommendations for it
+                            if (mediaResponse.similar!!.info?.get(0)?.type != "unknown") {
+                                showNoResultsMessage()
+                            }
+
+                            // If result type is unknown (TasteDive doesn't know what the search item is)
+                            else {
+                                showNoSuchMediaMessage()
+
+                            }
+                            showTastediveButton()
+                        }
+                        if (mediaResponse.similar!!.results?.isNotEmpty()!!) {
+
+                            // Response with results
+                            for ((count, item) in mediaResponse.similar?.results?.withIndex()!!) {
+                                mediaList.add(
+                                    Media(
+                                        mediaResponse.similar?.results?.get(count)?.name,
+                                        mediaResponse.similar?.results?.get(count)?.type,
+                                        mediaResponse.similar?.results?.get(count)?.description
+                                    )
+                                )
+                                println("Adding new Media to mediaList: $item")
+                            }
+
+                            showSuccessfulResultMessage()
+
+                            Log.d(TAG, "Response: $mediaResponse")
+                        }
+                    }
+                    // Don't show title until it is properly formatted
+                    resultItemText.visibility = View.VISIBLE
+
+                    // Hide the progress bar now that data is loaded
+                    progress.visibility = ProgressBar.INVISIBLE
+
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -129,6 +149,48 @@ class SearchResultActivity : AppCompatActivity() {
         )
         Log.d(TAG, "Request is: $request")
         requestQueue.add(request)
+    }
+
+    private fun showNoResponseMessage() {
+        resultItemText.setText(R.string.search_fail_error)
+    }
+
+    private fun showNoResultsMessage() {
+        resultItemText.text = formattedResultTitleText(
+            mediaResponse.similar?.info?.get(0)?.name,
+            R.string.no_results_error,
+            this
+        )
+        Log.d(TAG, "No results for item ${resultItemText.text}")
+
+    }
+
+    private fun showNoSuchMediaMessage() {
+        resultItemText.text = formattedResultTitleText(
+            mediaResponse.similar?.info?.get(0)?.name,
+            R.string.no_such_item,
+            this
+        )
+        Log.d(TAG, "unknown item ${resultItemText.text}")
+
+    }
+
+    private fun showSuccessfulResultMessage() {
+        resultItemText.text = formattedResultTitleText(
+            mediaResponse.similar?.info?.get(0)?.name,
+            R.string.results_for_text,
+            this
+        )
+    }
+
+    private fun showTastediveButton() {
+        val tasteDiveButton: Button = findViewById(R.id.openTasteDive)
+        tasteDiveButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(Constants.BASE_URL)
+            startActivity(intent)
+        }
+        tasteDiveButton.visibility = View.VISIBLE
     }
 
     companion object {

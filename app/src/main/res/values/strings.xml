@@ -1,19 +1,38 @@
 <resources>
     <string name="app_name">TasteDive Test Drive</string>
-    <string name="results_for_text">"Since you\'re into \n %s (%s), \n you might also enjoy:</string>
+
+    <!--Main Page-->
     <string name="search_description">Get recommendations for stuff we think you\'ll love based on stuff
         you already love. Just enter the name of a movie, show, book, author, game or music. Give it a try!
     </string>
+
+    <!--Search Results Page-->
+    <string name="results_for_text">"Since you\'re into \n %ss, \n you might also enjoy:</string>
+
     <string name="search">Find Awesome stuff</string>
     <string name="search_hint">What do you love?</string>
     <string name="blank_error_message">Type in something to search for</string>
+    <string name="happy_face_content_description">Happy face image</string>
+    <string name="open_tastedive">Open TasteDive</string>
+
+    <!--About Page-->
     <string name="about_title">About this app</string>
     <string name="about_app_text">TODO Add About app text</string>
-    <string name="tastedive_attribution_text">TODO add TasteDive attribution text here</string>
     <string name="attribution_title">Attribution</string>
     <string name="tastedive_title">TasteDive</string>
-    <string name="happy_face_content_description">Happy face image</string>
-    <string name="no_result_error">Dang, either you didn\'t add your private key to Constants.kt or you\'ve exceeded
+    <string name="tastedive_attribution_text">TasteDive is a recommendation engine that helps you explore your taste!</string>
+
+
+    <!--Errors-->
+    <string name="search_fail_error">Dang, either you didn\'t add your private key to the Constants file or you\'ve exceeded
         your hourly TasteDive quota.
     </string>
+
+    <string name="no_results_error">Shoot, it doesn\'t look like there are any recommendations for %s. This means that
+        the TasteDive engine needs more people to give their opions. Why not give yours by going to TasteDive? Just
+        click the button below!</string>
+
+    <string name="no_such_item">Hmm, it doesn\'t look like TasteDive has %s in its database. Yay! Here is your chance
+        to go to TasteDive and add it. Just click the button below!</string>
+
 </resources>

@@ -39,13 +39,12 @@ object TextHelpers {
         return builder
     }
 
-    fun formattedResultTitleText(resultName: String?, resultType: String?, context: Context): SpannableStringBuilder {
+    fun formattedResultTitleText(resultName: String?, responseString: Int, context: Context): SpannableStringBuilder {
         val formattedString: SpannableStringBuilder
 
         val searchResultString: String = String.format(
-            context.getString(R.string.results_for_text)
+            context.getString(responseString)
             , resultName
-            , capitalizeFirstLetter(resultType)
         )
         formattedString = boldText(searchResultString, resultName)
 
