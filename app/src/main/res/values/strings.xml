@@ -32,8 +32,8 @@
     </string>
 
     <string name="no_results_error">Shoot, it doesn\'t look like there are any recommendations for %s. This means that
-        the TasteDive engine needs more people to give their opions. Why not give yours by going to TasteDive? Just
-        click the button below!</string>
+        the TasteDive engine needs more people to give their opinions. Why not give yours by going to TasteDive and
+        making a recommendation? Just click the button below!</string>
 
     <string name="no_such_item">Hmm, it doesn\'t look like TasteDive has %s in its database. Yay! Here is your chance
         to go to TasteDive and add it. Just click the button below!</string>
