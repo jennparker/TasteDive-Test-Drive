@@ -1,9 +1,10 @@
-package com.booisajerk.tastedivetester
+package com.booisajerk.tastedivetester.view.activities
 
 import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.booisajerk.tastedivetester.R
 
 abstract class BaseActivity : AppCompatActivity() {
 

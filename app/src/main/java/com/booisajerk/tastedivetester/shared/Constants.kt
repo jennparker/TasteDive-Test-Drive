@@ -1,4 +1,4 @@
-package com.booisajerk.tastedivetester
+package com.booisajerk.tastedivetester.shared
 
 class Constants {
     companion object {

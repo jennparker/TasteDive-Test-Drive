@@ -1,4 +1,4 @@
-package com.booisajerk.tastedivetester
+package com.booisajerk.tastedivetester.view.activities
 
 import android.content.Intent
 import android.net.Uri
@@ -15,9 +15,14 @@ import com.android.volley.Response
 import com.android.volley.Response.Listener
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.booisajerk.tastedivetester.TextHelpers.encodeQueryString
-import com.booisajerk.tastedivetester.TextHelpers.formattedResultTitleText
-import com.booisajerk.tastedivetester.models.ResponseData
+import com.booisajerk.tastedivetester.MoshiBuilder
+import com.booisajerk.tastedivetester.R
+import com.booisajerk.tastedivetester.model.Media
+import com.booisajerk.tastedivetester.shared.TextHelpers.encodeQueryString
+import com.booisajerk.tastedivetester.shared.TextHelpers.formattedResultTitleText
+import com.booisajerk.tastedivetester.model.ResponseData
+import com.booisajerk.tastedivetester.shared.Constants
+import com.booisajerk.tastedivetester.view.adapters.CustomAdapter
 import com.squareup.moshi.JsonAdapter
 import java.io.IOException
 

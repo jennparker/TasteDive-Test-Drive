@@ -1,8 +1,10 @@
-package com.booisajerk.tastedivetester
+package com.booisajerk.tastedivetester.view.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import com.booisajerk.tastedivetester.R
+import com.booisajerk.tastedivetester.shared.Constants
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : BaseActivity() {

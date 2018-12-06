@@ -1,4 +1,4 @@
-package com.booisajerk.tastedivetester
+package com.booisajerk.tastedivetester.model
 
 data class Media(
     val name: String? = "",

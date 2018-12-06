@@ -1,4 +1,4 @@
-package com.booisajerk.tastedivetester.models
+package com.booisajerk.tastedivetester.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

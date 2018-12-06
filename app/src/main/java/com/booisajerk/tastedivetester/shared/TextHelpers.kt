@@ -1,4 +1,4 @@
-package com.booisajerk.tastedivetester
+package com.booisajerk.tastedivetester.shared
 
 import android.content.Context
 import android.graphics.Typeface

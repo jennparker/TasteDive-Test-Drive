@@ -1,4 +1,4 @@
-package com.booisajerk.tastedivetester
+package com.booisajerk.tastedivetester.view.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.booisajerk.tastedivetester.TextHelpers.capitalizeFirstLetter
-import com.booisajerk.tastedivetester.TextHelpers.trimNewLines
+import com.booisajerk.tastedivetester.model.Media
+import com.booisajerk.tastedivetester.R
+import com.booisajerk.tastedivetester.shared.TextHelpers.capitalizeFirstLetter
+import com.booisajerk.tastedivetester.shared.TextHelpers.trimNewLines
 
 /**
  * Provide views to RecyclerView with data from media.
