@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -194,6 +193,6 @@ class SearchResultActivity : BaseActivity() {
     }
 
     companion object {
-        private val TAG = "SearchResultActivity"
+        private const val TAG = "SearchResultActivity"
     }
 }

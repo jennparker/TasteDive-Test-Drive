@@ -18,7 +18,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:justificationMode="inter_word"
             android:layout_margin="@dimen/element_padding"
-            android:text="@string/about_app_text"/>
+            android:text="@string/about_app_text" tools:targetApi="o"/>
 
     <TextView
             android:id="@+id/tastediveUrl"

@@ -6,7 +6,6 @@
 
     <!--Search-->
     <dimen name="layout_margin">16dp</dimen>
-    <dimen name="result_movie_text">20sp</dimen>
     <dimen name="element_padding">16dp</dimen>
     <dimen name="button_margin">24dp</dimen>
     <dimen name="large_text">22sp</dimen>

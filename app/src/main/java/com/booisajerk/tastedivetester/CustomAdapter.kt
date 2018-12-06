@@ -51,6 +51,6 @@ class CustomAdapter(private val media: ArrayList<Media>) :
 
 
     companion object {
-        private val TAG = "CustomAdapter"
+        private const val TAG = "CustomAdapter"
     }
 }
