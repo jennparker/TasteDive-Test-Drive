@@ -20,15 +20,16 @@
             android:layout_margin="@dimen/element_padding"
             android:text="@string/about_app_text" tools:targetApi="o"/>
 
-    <TextView
-            android:id="@+id/tastediveUrl"
+    <Button
+            android:id="@+id/openTasteDiveAbout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/element_padding"
-            android:text="@string/tastedive_url"
-            android:autoLink="web"
-            android:textSize="@dimen/medium_text"
-            app:layout_constraintTop_toBottomOf="@id/aboutAppText"
-            app:layout_constraintStart_toStartOf="@id/aboutAppText"/>
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="@string/open_tastedive"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

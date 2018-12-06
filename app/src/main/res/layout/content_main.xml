@@ -52,11 +52,12 @@
 
     <Button
             android:id="@+id/searchButton"
-            android:text="@string/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/searchTermField"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="@string/search"
             android:layout_margin="@dimen/button_margin"
+            app:layout_constraintTop_toBottomOf="@+id/searchTermField"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
     />
