@@ -51,6 +51,7 @@ class MediaPresenter : App() {
                     // Either user hasn't entered a vaild key or hourly quota has been reached
                     if (mediaResponse.similar == null) {
                         mediaView?.isServerError()
+                        mediaView?.hideLoading()
                     }
 
                     // A valid response is received
@@ -85,9 +86,9 @@ class MediaPresenter : App() {
                             }
 
                             mediaView?.onMediaLoaded(mediaList)
-                            mediaView?.hideLoading()
                             Log.d(TAG, "Response: $mediaResponse")
                         }
+                        mediaView?.hideLoading()
                     }
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -96,6 +97,7 @@ class MediaPresenter : App() {
             }, Response.ErrorListener { error ->
                 error.printStackTrace()
                 mediaView?.onError(error)
+                mediaView?.hideLoading()
             }
         )
         Log.d(TAG, "Request is: $request")

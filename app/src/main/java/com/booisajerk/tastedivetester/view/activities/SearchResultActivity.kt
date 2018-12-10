@@ -15,6 +15,8 @@ import com.booisajerk.tastedivetester.model.Media
 import com.booisajerk.tastedivetester.presenter.MediaPresenter
 import com.booisajerk.tastedivetester.shared.Constants
 import com.booisajerk.tastedivetester.shared.TextHelpers.formattedResultTitleText
+import com.booisajerk.tastedivetester.shared.hide
+import com.booisajerk.tastedivetester.shared.show
 import com.booisajerk.tastedivetester.view.adapters.MediaAdapter
 import com.booisajerk.tastedivetester.view.interfaces.IMediaView
 
@@ -54,50 +56,36 @@ class SearchResultActivity : BaseActivity(), IMediaView {
     }
 
     override fun onMediaLoaded(media: List<Media>) {
-        hideProgressBar()
         mediaAdapter.setDataSource(media)
         showSuccessfulResultMessage()
     }
 
     override fun onError(throwable: Throwable) {
-        hideProgressBar()
         Log.e(TAG, "IOException: $throwable")
         resultItemText.text = getString(R.string.general_error)
     }
 
     override fun showLoading() {
-        showProgressBar()
+        progressBar.show()
     }
 
     override fun hideLoading() {
-        hideProgressBar()
+        progressBar.hide()
     }
 
     override fun isNoSuchMediaError() {
-        hideProgressBar()
         showNoSuchMediaMessage()
         showTasteDiveButton()
     }
 
     override fun isNoResultsError() {
-        hideProgressBar()
         showNoResultsMessage()
         showTasteDiveButton()
     }
 
     override fun isServerError() {
-        hideProgressBar()
         showNoResponseMessage()
     }
-
-    private fun showProgressBar() {
-        progressBar.visibility = ProgressBar.VISIBLE
-    }
-
-    private fun hideProgressBar() {
-        progressBar.visibility = ProgressBar.INVISIBLE
-    }
-
 
     private fun prepareRecyclerView() {
         val viewManager = LinearLayoutManager(this)
@@ -140,7 +128,7 @@ class SearchResultActivity : BaseActivity(), IMediaView {
             intent.data = Uri.parse(Constants.BASE_URL)
             startActivity(intent)
         }
-        tasteDiveButton.visibility = View.VISIBLE
+        tasteDiveButton.show()
     }
 
     companion object {
