@@ -10,149 +10,107 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.Response.Listener
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import com.booisajerk.tastedivetester.MoshiBuilder
 import com.booisajerk.tastedivetester.R
 import com.booisajerk.tastedivetester.model.Media
-import com.booisajerk.tastedivetester.shared.TextHelpers.encodeQueryString
-import com.booisajerk.tastedivetester.shared.TextHelpers.formattedResultTitleText
-import com.booisajerk.tastedivetester.model.ResponseData
+import com.booisajerk.tastedivetester.presenter.MediaPresenter
 import com.booisajerk.tastedivetester.shared.Constants
-import com.booisajerk.tastedivetester.view.adapters.CustomAdapter
-import com.squareup.moshi.JsonAdapter
-import java.io.IOException
+import com.booisajerk.tastedivetester.shared.TextHelpers.formattedResultTitleText
+import com.booisajerk.tastedivetester.view.adapters.MediaAdapter
+import com.booisajerk.tastedivetester.view.interfaces.IMediaView
 
-class SearchResultActivity : BaseActivity() {
-    private lateinit var adapter: JsonAdapter<ResponseData>
-    private lateinit var mediaResponse: ResponseData
-    private lateinit var resultItemText: TextView
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
-    private var mediaList: ArrayList<Media> = ArrayList()
-    private lateinit var searchString: String
-    private lateinit var progress: ProgressBar
+class SearchResultActivity : BaseActivity(), IMediaView {
+
+    private val mediaAdapter = MediaAdapter()
+
+    private val recyclerView: RecyclerView by lazy {
+        findViewById<RecyclerView>(R.id.recyclerView)
+    }
+
+    private val resultItemText: TextView by lazy {
+        findViewById<TextView>(R.id.searchResultText)
+    }
+
+    private val tasteDiveButton: Button by lazy {
+        findViewById<Button>(R.id.openTasteDive)
+    }
+
+    private val progressBar: ProgressBar by lazy {
+        findViewById<ProgressBar>(R.id.progressBar)
+    }
+
+    private val mediaPresenter = MediaPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate called")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
 
-        resultItemText = findViewById(R.id.searchResultText)
+        prepareRecyclerView()
 
-        // Retrieve the search string from the MainActivity
-        searchString = encodeQueryString(intent.getStringExtra(Constants.INTENT_KEY))
+        recyclerView.adapter = mediaAdapter
 
-        // Show progress bar while results load
-        progress = findViewById(R.id.progressBar)
-        progress.isIndeterminate = true
-        progress.visibility = ProgressBar.VISIBLE
-
-        viewManager = LinearLayoutManager(this)
-
-        viewAdapter = CustomAdapter(mediaList)
-
-        recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
-            // improves performance
-            // use if changes in content do not change the layout size of the RecyclerView
-            setHasFixedSize(true)
-
-            // use linear layout manager
-            layoutManager = viewManager
-
-            // assign viewAdapter
-            adapter = viewAdapter
-
-            requestMedia(searchString)
-        }
+        mediaPresenter.onViewCreated(this)
+        mediaPresenter.requestMedia(intent.getStringExtra(Constants.INTENT_KEY))
     }
 
-    private fun requestMedia(enteredMedia: String) {
-        Log.d(TAG, "requestMedia() called")
-        val requestQueue = Volley.newRequestQueue(this)
-        val url =
-            Constants.BASE_URL + Constants.API + Constants.QUERY_KEY + enteredMedia + Constants.INFO_LEVEL + Constants.TASTE_DIVE_API_KEY
+    override fun onMediaLoaded(media: List<Media>) {
+        hideProgressBar()
+        mediaAdapter.setDataSource(media)
+        showSuccessfulResultMessage()
+    }
 
-        val request = StringRequest(
-            Request.Method.GET
-            , url
-            , Listener<String> { response: String ->
-                Log.d(TAG, "Response received")
+    override fun onError(throwable: Throwable) {
+        hideProgressBar()
+        Log.e(TAG, "IOException: $throwable")
+        resultItemText.text = getString(R.string.general_error)
+    }
 
-                val moshi = MoshiBuilder.moshiInstance
-                adapter = moshi.adapter(ResponseData::class.java)
+    override fun showLoading() {
+        showProgressBar()
+    }
 
-                try {
-                    mediaResponse = adapter.fromJson(response)!!
+    override fun hideLoading() {
+        hideProgressBar()
+    }
 
-                    println("Response:  $mediaResponse")
+    override fun isNoSuchMediaError() {
+        hideProgressBar()
+        showNoSuchMediaMessage()
+        showTasteDiveButton()
+    }
 
-                    // Error response received
-                    // Either user hasn't entered a vaild key or hourly quota has been reached
-                    if (mediaResponse.similar == null) {
+    override fun isNoResultsError() {
+        hideProgressBar()
+        showNoResultsMessage()
+        showTasteDiveButton()
+    }
 
-                        showNoResponseMessage()
-                    }
+    override fun isServerError() {
+        hideProgressBar()
+        showNoResponseMessage()
+    }
 
-                    // A valid response is received
-                    else {
+    private fun showProgressBar() {
+        progressBar.visibility = ProgressBar.VISIBLE
+    }
 
-                        // If results are empty
-                        if (mediaResponse.similar!!.results?.isNullOrEmpty()!!) {
-                            Log.d(TAG, "results are empty")
+    private fun hideProgressBar() {
+        progressBar.visibility = ProgressBar.INVISIBLE
+    }
 
-                            // If result type is not unknown (TasteDive has a record of this media, but doesn't have
-                            // enough votes to make recommendations for it
-                            if (mediaResponse.similar!!.info?.get(0)?.type != "unknown") {
-                                showNoResultsMessage()
-                            }
 
-                            // If result type is unknown (TasteDive doesn't know what the search item is)
-                            else {
-                                showNoSuchMediaMessage()
+    private fun prepareRecyclerView() {
+        val viewManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = viewManager
+        recyclerView.setHasFixedSize(true)
+    }
 
-                            }
-                            showTastediveButton()
-                        }
-                        if (mediaResponse.similar!!.results?.isNotEmpty()!!) {
-
-                            // Response with results
-                            for ((count, item) in mediaResponse.similar?.results?.withIndex()!!) {
-                                mediaList.add(
-                                    Media(
-                                        mediaResponse.similar?.results?.get(count)?.name,
-                                        mediaResponse.similar?.results?.get(count)?.type,
-                                        mediaResponse.similar?.results?.get(count)?.description
-                                    )
-                                )
-                                println("Adding new Media to mediaList: $item")
-                            }
-
-                            showSuccessfulResultMessage()
-
-                            Log.d(TAG, "Response: $mediaResponse")
-                        }
-                    }
-                    // Don't show title until it is properly formatted
-                    resultItemText.visibility = View.VISIBLE
-
-                    // Hide the progress bar now that data is loaded
-                    progress.visibility = ProgressBar.INVISIBLE
-
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-
-            }, Response.ErrorListener { error ->
-                error.printStackTrace()
-            }
+    private fun showSuccessfulResultMessage() {
+        resultItemText.text = formattedResultTitleText(
+            mediaPresenter.getReturnedName(),
+            R.string.results_for_text,
+            this
         )
-        Log.d(TAG, "Request is: $request")
-        requestQueue.add(request)
     }
 
     private fun showNoResponseMessage() {
@@ -161,34 +119,22 @@ class SearchResultActivity : BaseActivity() {
 
     private fun showNoResultsMessage() {
         resultItemText.text = formattedResultTitleText(
-            mediaResponse.similar?.info?.get(0)?.name,
+            mediaPresenter.getReturnedName(),
             R.string.no_results_error,
             this
         )
-        Log.d(TAG, "No results for item ${resultItemText.text}")
-
     }
 
     private fun showNoSuchMediaMessage() {
         resultItemText.text = formattedResultTitleText(
-            mediaResponse.similar?.info?.get(0)?.name,
+            mediaPresenter.getReturnedName(),
             R.string.no_such_item,
             this
         )
-        Log.d(TAG, "unknown item ${resultItemText.text}")
-
+        showTasteDiveButton()
     }
 
-    private fun showSuccessfulResultMessage() {
-        resultItemText.text = formattedResultTitleText(
-            mediaResponse.similar?.info?.get(0)?.name,
-            R.string.results_for_text,
-            this
-        )
-    }
-
-    private fun showTastediveButton() {
-        val tasteDiveButton: Button = findViewById(R.id.openTasteDive)
+    private fun showTasteDiveButton() {
         tasteDiveButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(Constants.BASE_URL)

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import com.booisajerk.tastedivetester.R
 import com.booisajerk.tastedivetester.shared.Constants
+import com.booisajerk.tastedivetester.shared.TextHelpers
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : BaseActivity() {
@@ -19,7 +20,8 @@ class MainActivity : BaseActivity() {
                 searchTermField.error = getString(R.string.blank_error_message)
             } else {
                 val intent = Intent(this@MainActivity, SearchResultActivity::class.java)
-                intent.putExtra(Constants.INTENT_KEY, searchTermField.text.toString())
+                intent.putExtra(Constants.INTENT_KEY, TextHelpers.encodeQueryString(
+                    searchTermField.text.toString()))
                 startActivity(intent)
             }
         }

@@ -7,16 +7,13 @@ import android.text.style.StyleSpan
 
 
 object TextHelpers {
-    fun capitalizeFirstLetter(text: String?): String? {
-        return text?.capitalize()
-    }
-
     /*
-    * Trim leading and trailing new lines '\n'
+    * Some TasteDive response data is returned with unnecessary new lines.
+    * Trim leading and trailing new lines '\n'.
     * Note: New lines within the text (e.g. paragraphs) are retained
     */
-    fun trimNewLines(text: String): String {
-        return text.trim('\n')
+    fun trimNewLines(text: String?): String? {
+        return text?.trim('\n')
     }
 
     /*
@@ -52,7 +49,7 @@ object TextHelpers {
     }
 
     /*
-    * Encode spaces and commas
+    * Encode spaces and commas to be sent in request
     * */
     fun encodeQueryString(searchText: String): String {
 

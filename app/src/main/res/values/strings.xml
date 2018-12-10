@@ -21,7 +21,6 @@
         tastes. The more reviews the engine has, the better the recommendations are, so feel free to go to their website
         and rate some media.
     </string>
-    <string name="tastedive_url">www.tastedive.com</string>
 
     <!--Errors-->
     <string name="search_fail_error">Dang, either you didn\'t add your private key to the Constants file or you\'ve
@@ -29,11 +28,12 @@
         your hourly TasteDive quota.
     </string>
     <string name="no_results_error">Shoot, it doesn\'t look like there are any recommendations for %s. This means that
-        the TasteDive engine needs more people to give their opinions. Why not give yours by going to TasteDive and
+        the TasteDive engine needs more people to give their opinions on that item. Why not give yours by going to TasteDive and
         making a recommendation? Just click the button below!
     </string>
     <string name="no_such_item">Hmm, it doesn\'t look like TasteDive has %s in its database. Yay! Here is your chance
         to go to TasteDive and add it. Just click the button below!
     </string>
+    <string name="general_error">An error has occurred. Please try again later.</string>
 
 </resources>
