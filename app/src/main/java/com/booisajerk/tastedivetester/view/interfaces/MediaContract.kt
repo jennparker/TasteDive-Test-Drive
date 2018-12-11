@@ -2,7 +2,7 @@ package com.booisajerk.tastedivetester.view.interfaces
 
 import com.booisajerk.tastedivetester.model.Media
 
-interface IMediaView {
+interface MediaContract {
 
     fun onMediaLoaded(media: List<Media>)
 
@@ -17,4 +17,6 @@ interface IMediaView {
     fun showLoading()
 
     fun hideLoading()
+
+    fun requestedTitle(title: String)
 }

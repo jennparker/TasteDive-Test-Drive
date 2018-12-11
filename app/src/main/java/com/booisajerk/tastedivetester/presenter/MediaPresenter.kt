@@ -12,30 +12,31 @@ import com.booisajerk.tastedivetester.model.ResponseData
 import com.booisajerk.tastedivetester.shared.App
 import com.booisajerk.tastedivetester.shared.Constants
 import com.booisajerk.tastedivetester.shared.TextHelpers
-import com.booisajerk.tastedivetester.view.interfaces.IMediaView
+import com.booisajerk.tastedivetester.view.interfaces.MediaContract
 import com.squareup.moshi.JsonAdapter
 import java.io.IOException
 
 @SuppressLint("Registered")
 class MediaPresenter : App() {
+
+    private var mediaView: MediaContract? = null
     private lateinit var adapter: JsonAdapter<ResponseData>
     private lateinit var mediaResponse: ResponseData
 
-    private var mediaView: IMediaView? = null
     private var mediaList: ArrayList<Media> = ArrayList()
 
-    fun onViewCreated(view: IMediaView) {
+    fun onViewCreated(view: MediaContract) {
         mediaView = view
     }
 
-    fun requestMedia(enteredMedia: String) {
+     fun requestMedia(requestString: String) {
         Log.d(TAG, "requestMedia() called")
 
         mediaView?.showLoading()
         val singleton = VolleySingleton.getInstance(App.instance)
         val request = StringRequest(
             Request.Method.GET
-            , getRequestUrl(enteredMedia)
+            , getRequestUrl(requestString)
             , Response.Listener<String> { response: String ->
                 Log.d(TAG, "Response received")
 
@@ -56,6 +57,7 @@ class MediaPresenter : App() {
 
                     // A valid response is received
                     else {
+                        mediaView?.requestedTitle(mediaResponse.similar!!.info?.get(0)?.name!!)
 
                         // If results are empty
                         if (mediaResponse.similar!!.results?.isNullOrEmpty()!!) {
@@ -106,10 +108,6 @@ class MediaPresenter : App() {
 
     private fun getRequestUrl(searchString: String): String {
         return Constants.BASE_URL + Constants.API + Constants.QUERY_KEY + searchString + Constants.INFO_LEVEL + Constants.TASTE_DIVE_API_KEY
-    }
-
-    fun getReturnedName(): String? {
-        return mediaResponse.similar?.info?.get(0)?.name
     }
 
     companion object {

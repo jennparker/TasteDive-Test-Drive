@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -18,9 +17,9 @@ import com.booisajerk.tastedivetester.shared.TextHelpers.formattedResultTitleTex
 import com.booisajerk.tastedivetester.shared.hide
 import com.booisajerk.tastedivetester.shared.show
 import com.booisajerk.tastedivetester.view.adapters.MediaAdapter
-import com.booisajerk.tastedivetester.view.interfaces.IMediaView
+import com.booisajerk.tastedivetester.view.interfaces.MediaContract
 
-class SearchResultActivity : BaseActivity(), IMediaView {
+class SearchResultActivity : BaseActivity(), MediaContract {
 
     private val mediaAdapter = MediaAdapter()
 
@@ -40,6 +39,8 @@ class SearchResultActivity : BaseActivity(), IMediaView {
         findViewById<ProgressBar>(R.id.progressBar)
     }
 
+    private lateinit var requestedTitle: String
+
     private val mediaPresenter = MediaPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +59,10 @@ class SearchResultActivity : BaseActivity(), IMediaView {
     override fun onMediaLoaded(media: List<Media>) {
         mediaAdapter.setDataSource(media)
         showSuccessfulResultMessage()
+    }
+
+    override fun requestedTitle(title: String) {
+        requestedTitle = title
     }
 
     override fun onError(throwable: Throwable) {
@@ -95,7 +100,7 @@ class SearchResultActivity : BaseActivity(), IMediaView {
 
     private fun showSuccessfulResultMessage() {
         resultItemText.text = formattedResultTitleText(
-            mediaPresenter.getReturnedName(),
+            requestedTitle,
             R.string.results_for_text,
             this
         )
@@ -107,7 +112,7 @@ class SearchResultActivity : BaseActivity(), IMediaView {
 
     private fun showNoResultsMessage() {
         resultItemText.text = formattedResultTitleText(
-            mediaPresenter.getReturnedName(),
+            requestedTitle,
             R.string.no_results_error,
             this
         )
@@ -115,7 +120,7 @@ class SearchResultActivity : BaseActivity(), IMediaView {
 
     private fun showNoSuchMediaMessage() {
         resultItemText.text = formattedResultTitleText(
-            mediaPresenter.getReturnedName(),
+            requestedTitle,
             R.string.no_such_item,
             this
         )
